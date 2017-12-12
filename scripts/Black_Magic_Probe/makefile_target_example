@@ -1,0 +1,15 @@
+## Black Magic Probe
+flash_black: nrf52832_xxaa_s132
+        @echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+        arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmo$
+        -x black_magic_probe_flash.scr $(OUTPUT_BINARY_DIRECTORY)/$<.hex
+
+flash_softdevice_black:
+        @echo Flashing: s132_nrf52_4.0.2_softdevice.hex
+        arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmo$
+        -x black_magic_probe_flash.scr ../../../sdk_components/softdevice/s132/$
+
+flash_erase_black:
+        @echo Full Erase Chip!
+        arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmo$
+        -x black_magic_probe_erase.scr
