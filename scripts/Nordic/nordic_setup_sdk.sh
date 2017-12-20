@@ -1,5 +1,10 @@
 #!/bin/bash
-# Set up Nordic nRF5 SDK
+# Set up Nordic nRF5 SDK and nRF5x command line tools
+# Mac Users: You need to install homebrew before.
+# Copy/paste on a terminal:  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+# brew tap caskroom/drivers
+# brew cask install nordic-nrf5x-command-line-tools
+
 SDK_VERSION_ZIP=nRF5_SDK_14.2.0_17b948a.zip
 SDK_URL="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v14.x.x/nRF5_SDK_14.2.0_17b948a.zip"
 SDK_DIRECTORY="libs/nRF5_SDK/"
