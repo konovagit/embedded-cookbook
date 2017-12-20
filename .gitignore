@@ -52,3 +52,9 @@ Mkfile.old
 dkms.conf
 
 \.DS_Store
+
+\libs
+
+Project_Template/Nordic/_build/
+
+Template_Project/Nordic/_build/
