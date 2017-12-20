@@ -296,6 +296,21 @@ flash_softdevice:
 erase:
 	nrfjprog -f nrf52 --eraseall
 
+flash_black:
+	@echo Flashing: $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
+	arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmodem7BB09FB1' \
+	-x black_magic_probe_flash.scr $(OUTPUT_DIRECTORY)/nrf52832_xxaa.hex
+
+flash_softdevice_black:
+  #@echo Flashing.
+	arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmodem7BB09FB1' \
+	-x black_magic_probe_flash.scr $(SDK_ROOT)/components/softdevice/s132/hex/s132_nrf52_5.0.0_softdevice.hex
+
+flash_erase_black:
+	@echo Full Erase Chip!
+	arm-none-eabi-gdb -nx --batch -ex 'target extended-remote /dev/cu.usbmodem7BB09FB1' \
+	-x black_magic_probe_erase.scr
+
 SDK_CONFIG_FILE := $(INCLUDE_ROOT)/sdk_config.h
 CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
 sdk_config:
