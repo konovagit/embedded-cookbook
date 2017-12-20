@@ -141,7 +141,7 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/timer \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components/drivers_nrf/pwm \
-  $(INCLUDE_ROOT)/config \
+  $(INCLUDE_ROOT)/ \
   $(SDK_ROOT)/components/libraries/csense_drv \
   $(SDK_ROOT)/components/libraries/csense \
   $(SDK_ROOT)/components/libraries/balloc \
@@ -261,6 +261,11 @@ default: nrf52832_xxaa
 
 # Print all targets that can be built
 help:
+	@echo Install Steps:
+	@echo 1 - Set up the path in makefile.windows or makefile.posix, in $(SDK_ROOT)/components/toolchain/gcc
+	@echo 2 - Copy existing sdk_config.h from SDK to your $(INCLUDE_ROOT) folder.
+	@echo 3 - Create or copy existing main from SDK to your $(SOURCE_ROOT) folder.
+	@echo 4 - Create or copy existing linker file .ld to the project root.
 	@echo following targets are available:
 	@echo		nrf52832_xxaa
 	@echo		flash_softdevice
@@ -291,7 +296,7 @@ flash_softdevice:
 erase:
 	nrfjprog -f nrf52 --eraseall
 
-SDK_CONFIG_FILE := $(INCLUDE_ROOT)/config/sdk_config.h
+SDK_CONFIG_FILE := $(INCLUDE_ROOT)/sdk_config.h
 CMSIS_CONFIG_TOOL := $(SDK_ROOT)/external_tools/cmsisconfig/CMSIS_Configuration_Wizard.jar
 sdk_config:
 	java -jar $(CMSIS_CONFIG_TOOL) $(SDK_CONFIG_FILE)
