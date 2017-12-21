@@ -1,8 +1,8 @@
 #!/bin/bash
 # Set up Nordic nRF5 SDK
-SDK_VERSION_ZIP=nRF5_SDK_14.2.0_17b948a.zip
-SDK_VERSION=nRF5_SDK_14.2.0_17b948a
-SDK_URL="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v14.x.x/nRF5_SDK_14.2.0_17b948a.zip"
+SDK_VERSION_ZIP=nRF5_SDK_15.0.0_a53641a.zip
+SDK_VERSION=nRF5_SDK_15.0.0_a53641a
+SDK_URL="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/nRF5_SDK_15.0.0_a53641a.zip"
 SDK_DIRECTORY="libs/nRF5_SDK/"
 
 if [[ $(uname) = "Darwin" ]]; then
