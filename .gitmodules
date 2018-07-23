@@ -1,0 +1,3 @@
+[submodule "Docker/Espressif/esp32env"]
+	path = Docker/Espressif/esp32env
+	url = git@github.com:konovagit/esp32env.git
