@@ -1,8 +1,8 @@
 #!/bin/bash
 # Set up Nordic nRF5 SDK
-SDK_VERSION_ZIP=nRF5_SDK_15.0.0_a53641a.zip
-SDK_VERSION=nRF5_SDK_15.0.0_a53641a
-SDK_URL="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/nRF5_SDK_15.0.0_a53641a.zip"
+SDK_VERSION_ZIP=nRF5_SDK_15.2.0_9412b96.zip
+SDK_VERSION=nRF5_SDK_15.2.0_9412b96
+SDK_URL="https://developer.nordicsemi.com/nRF5_SDK/nRF5_SDK_v15.x.x/$SDK_VERSION_ZIP"
 SDK_DIRECTORY="libs/nRF5_SDK/"
 
 if [[ $(uname) = "Darwin" ]]; then
@@ -24,6 +24,9 @@ mkdir include
 echo Create Libs Folder
 mkdir libs
 mkdir libs/nRF5_SDK
+echo Create Tools Folder
+mkdir tools
+mkdir tools/toolchain
 
 cd $SDK_DIRECTORY
 echo Downloading $SDK_VERSION
@@ -33,3 +36,30 @@ if [[ $OS = MacOS ]]; then
        tar --extract --file=$SDK_VERSION_ZIP
        rm $SDK_VERSION_ZIP
 fi
+
+cd ./
+echo Copy GCC toolchain
+cp -R libs/nRF5_SDK/$SDK_VERSION/components/toolchain/gcc tools/toolchain
+
+echo Copy Linker file and Makefile from BLE APP Template Example
+cp libs/nRF5_SDK/$SDK_VERSION/examples/ble_peripheral/ble_app_template/pca10040/s132/armgcc/ble_app_template_gcc_nrf52.ld .
+cp libs/nRF5_SDK/$SDK_VERSION/examples/ble_peripheral/ble_app_template/pca10040/s132/armgcc/Makefile .
+
+echo copy SDK Config 
+cp libs/nRF5_SDK/$SDK_VERSION/examples/ble_peripheral/ble_app_template/pca10040/s132/config/sdk_config.h include
+
+echo copy Main.c 
+cp libs/nRF5_SDK/$SDK_VERSION/examples/ble_peripheral/ble_app_template/main.c source
+
+echo Modify Makefile structure
+#Delete 7 first lines
+sed -i -e '1,7d' Makefile
+#add some extras lines
+echo 'SDK_CONFIG_FILE := $(INCLUDE_ROOT)/sdk_config.h' | cat - Makefile > temp && mv temp Makefile
+echo 'TEMPLATE_PATH := tools/gcc' | cat - Makefile > temp && mv temp Makefile
+echo '$(INCLUDE_ROOT)/ \' | cat - Makefile > temp && mv temp Makefile
+echo '$(SOURCE_ROOT)/main.c \' | cat - Makefile > temp && mv temp Makefile
+echo 'SDK_ROOT := libs/nRF5_SDK/$(SDK_VERSION)' | cat - Makefile > temp && mv temp Makefile
+echo 'INCLUDE_ROOT := include' | cat - Makefile > temp && mv temp Makefile
+echo 'SOURCE_ROOT := source' | cat - Makefile > temp && mv temp Makefile
+echo 'SDK_VERSION= '$SDK_VERSION | cat - Makefile > temp && mv temp Makefile
