@@ -37,7 +37,7 @@ if [[ $OS = MacOS ]]; then
        rm $SDK_VERSION_ZIP
 fi
 
-cd ./
+cd ../../
 echo Copy GCC toolchain
 cp -R libs/nRF5_SDK/$SDK_VERSION/components/toolchain/gcc tools/toolchain
 
